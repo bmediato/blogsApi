@@ -12,6 +12,15 @@ const createToken = (data) => {
   return token;
 };
 
+const verifyToken = (req, res, next) => {
+  const { authorization } = req.headers;
+  if (!authorization) return res.status(401).json({ message: 'Token not found' });
+  const token = jwt.verify(authorization, secret);
+  req.data = token.data;
+  next();
+};
+
 module.exports = {
   createToken,
+  verifyToken,
 };
