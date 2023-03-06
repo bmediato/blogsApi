@@ -13,11 +13,17 @@ const createToken = (data) => {
 };
 
 const verifyToken = (req, res, next) => {
-  const { authorization } = req.headers;
-  if (!authorization) return res.status(401).json({ message: 'Token not found' });
-  const token = jwt.verify(authorization, secret);
-  req.data = token.data;
-  next();
+  try {
+    const { authorization } = req.headers;
+
+    if (!authorization) return res.status(401).json({ message: 'Token not found' });
+
+    const token = jwt.verify(authorization, secret);
+    req.data = token.data;
+    next();
+  } catch (e) {
+    res.status(401).json({ message: 'Expired or invalid token' });
+  } 
 };
 
 module.exports = {
