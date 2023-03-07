@@ -11,10 +11,9 @@ const { verifyToken } = require('../middleware/auth');
 const userRouter = express.Router();
 
 userRouter.post('/login', loginValidation, loginController);
-userRouter.post('/user', 
-  displayValidation, 
-  emailValidation, 
+userRouter.post('/user', displayValidation, emailValidation, 
   passwordValidation, userController.createUser);
 userRouter.get('/user', verifyToken, userController.getAll);
+userRouter.get('/user/:id', verifyToken, userController.getById);
 
 module.exports = userRouter;
