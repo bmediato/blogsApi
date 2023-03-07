@@ -10,4 +10,6 @@ categoriesRouter.post('/categories',
   nameValidation, 
   categoryController.createCategory);
 
+categoriesRouter.get('/categories', verifyToken, categoryController.getAll);
+
 module.exports = categoriesRouter;
